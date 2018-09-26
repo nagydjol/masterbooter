@@ -1,0 +1,695 @@
+		    ÉÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ»
+		    º   MASTERBOOTER v3.7 DOCUMENTATION   º
+		    º        1997-2018 Nagy Daniel        º
+		    ÈÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ¼
+
+ÚÄÄÄÄÄÄÄÄÄÄ¿
+³ CONTENTS ³
+ÀÄÄÄÄÄÄÄÄÄÄÙ
+
+		Disclaimer............................ 1
+
+		Introduction.......................... 2
+
+		Features.............................. 3
+
+		Compatibility......................... 4
+
+		Usage................................. 5
+
+                A Step-by-step Example................ 6
+
+		History............................... 7
+
+
+ÚÄÄÄÄÄÄÄÄÄÄÄÄ¿
+³ DISCLAIMER ÃÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ 1 ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ÀÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+        Using this program comes without any warranty. The author
+        and distributors will not accept responsibility for any
+        damage incurred directly or indirectly through use of this
+        program.
+        Use at your own risk!
+
+
+ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+³ INTRODUCTION ÃÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ 2 ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+        MasterBooter is a very powerful utility which enables your
+        computer to use multiple operating systems without changing
+        harddisks or messing with boot floppies.
+        You can choose among up to 8 operating systems at boot time.
+        MasterBooter is compatible with many operating systems.
+
+
+ÚÄÄÄÄÄÄÄÄÄÄ¿
+³ FEATURES ÃÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ 3 ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ÀÄÄÄÄÄÄÄÄÄÄÙ
+
+        - Capability of booting from any harddisk's any partition
+
+        - Compatibility with many operating systems:
+             Win9x/ME
+             WinNT/Win2000/WinXP/Win2003/2008/Vista
+             MS-DOS, Novell DOS, Caldera DR-DOS, IBM DOS, OpenDOS, PTS-DOS
+             Linux
+             FreeBSD
+             SCO OpenServer
+             OS/2 (Warp, Merlin)
+             OS X
+             Solaris
+             Oberon
+             Theos
+             BeOS
+             Unknown OS with 'standard' boot process
+
+        - Programmable delay time
+
+        - Dynamic hiding of primary FAT, NTFS/HPFS partitions
+
+        - Password protecting partitions
+
+        - Protecting partitions using special keystrokes at boot time
+
+        - Optional beeping when the boot menu appears
+
+        - Optional floppy boot support
+
+        - Up to 8 operating systems on a single computer without
+          the hassle of boot disks
+
+        - Small memory and harddisk space requirement for the setup
+          program only. The loader doesn't use any memory or partition space
+
+        - Support for command line options to customize your boot menu
+
+        - Safety and easy-to-use user interface
+
+
+ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+³ COMPATIBILITY ÃÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ 4 ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+        Requirements:  - 80386 processor or newer
+                       - Floppy, CD-ROM or USB stick with DOS
+                         (for installation only)
+                       - At least one BIOS supported harddisk
+                       - Keyboard
+                       - VGA adapter
+
+        This program shouldn't conflict with any other programs which
+        don't alter your disk's Master Boot Record (MBR).
+
+        Known programs which alter the MBR (and therefore can't be used
+        with MasterBooter) are:
+
+          - MicroHouse's EZ-Drive
+          - OnTrack's Disk Manager
+          - PC Vault
+          - Other boot managers which are located in the MBR
+
+
+ÚÄÄÄÄÄÄÄ¿
+³ USAGE ÃÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ 5 ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ÀÄÄÄÄÄÄÄÙ
+
+        Introduction:
+        ÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+        Every time you turn on your computer, the BIOS loads and executes
+        a small program, which resides in the very first sector of the first
+        harddisk. This sector is the so-called Master Boot Record (MBR).
+
+        The small program in the MBR examines the partitions and loads the
+        first sector of the partition which has the 'active' flag. This
+        first sector of a partition is called the boot sector. The boot
+        sector contains operating system specific code, which loads and
+        executes the system files of the operating system.
+
+        A harddisk can contain up to four primary partitions, but only one
+        can be active at a time. This flexible technique enables many
+        operating systems to be used on a PC.
+
+        There is a special primary partition, called the extended partition,
+        which doesn't contain user data but can be used to hold more
+        partitions. These partitions inside an extended partition are
+        called logical drives. Most of the operating systems can be
+        installed only in primary partitions. Some - including Linux - can
+        be installed in logical drives too.
+
+        The operating systems often have their own unique loader code, and
+        won't let you use other systems, unless you know tricky methods to
+        get past this. MasterBooter works by replacing the program in the
+        MBR with its own loader code that you can configure, so you can
+        select from any installed operating systems. MasterBooter uses 7
+        more sectors after the Master Boot Record.
+
+
+        Overview:
+        ÄÄÄÄÄÄÄÄÄ
+
+        If you have all operating systems installed, all you need to do is
+        run MRBOOTER and configure your boot menu. Before doing so, you can
+        use MRESCUE to create a backup copy of your partition tables and
+        boot sectors. Run MRESCUE with the '/?' command line option for help.
+
+        If one of the selected partitions changes then the restore command
+        of the MRESCUE utility cannot be used with an old image, because
+        the saved image contains the old partition table, therefore it
+        would destroy the new partition table. If you re-partition your
+        harddisk and re-run MasterBooter, be sure to save your new menu
+        again.
+
+        If you want to create a completely new system, follow these
+        general instructions below:
+         1. Using EFDISK, partition the harddisk into as many primary
+            partitions as the number of operating systems you intend to have
+            (up to a maximum of four per harddisk)
+         2. Install the operating systems
+         3. Install MasterBooter
+
+
+     1) Preparing To Partition Your Harddisk
+        ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+        WARNING: Re-partitioning your harddisk will erase ALL data from it!
+                 Make sure you have backed up any important files!
+
+        Since most operating systems need to be started from a primary
+        partition to boot reliably (except Linux which can boot from a
+        logical drive too), you will need to use a disk partitioning
+        utility that lets you make multiple primary partitions.
+        FDISK.EXE, which is supplied as standard with DOS and Win9x/ME,
+        cannot create more than one primary partition, so the MasterBooter
+        package includes EFDISK.EXE for this purpose.
+
+        First, create a bootable DOS media (floppy, CD-ROM or USB stick)
+        and put copies of the following files onto it:
+                    MRBOOTER.EXE (the MasterBooter utility)
+                    EFDISK.EXE (disk-partitioning utility)
+                    FDISK.EXE (disk-partitioning utility)
+                    FORMAT.COM (to format FAT partitions)
+
+        If you need to install any operating systems from a non-bootable
+        CD-ROM, you will also need CD-ROM driver files, plus properly
+        configured AUTOEXEC.BAT and CONFIG.SYS files for this. Make sure
+        it works before proceeding! 
+
+        Reboot your machine with your bootable media. From the relevant
+        directory, type EFDISK /mbr. This will install a correct
+        Master Boot Sector loader and signature. Then start EFDISK.
+
+        Note: if you boot from a USB stick which uses harddisk emulation
+        mode (it has more partitions), use 'EFDISK /mbr 2'.
+
+        EFDISK will gather information about your disks and partitions. You
+        will then be provided with a list of all partitions on all disks and
+        their parameters. From this list you can choose the partition entry
+        you want to change.
+
+        Note: if you boot from a USB stick which uses harddisk emulation
+        mode (it has more partitions), the first disk will be the USB stick,
+        and the 2nd disk will be your 1st fixed disk.
+
+        Before making changes to an existing partition, always create
+        a rescue file with MRESCUE first, because any changes can cause
+        data loss!!!
+
+        When you select a partition, EFDISK will ask the following questions:
+          1. The hexadecimal type ID of the partition. EFDISK will show you
+             the most common types and their IDs.
+          2. The starting cylinder of the partition (the minimum is 0).
+             If the previous partition ends on cylinder 'x' then set this to
+             'x+1'. This number is decimal.
+          3. The ending cylinder number of partition. EFDISK will show you
+             the maximum cylinder number available for the actual harddisk.
+
+        Pressing SPACE will activate the highlighted partition, pressing DEL
+        will clear it. With the 'h' key, you can hide/unhide FAT and
+        NTFS/HPFS partitions.
+
+        NOTE: EFDISK doesn't check for partition errors! It's not an
+              'intelligent' program. You have total freedom to set all
+              parameters, even if they are incorrect or redundant!
+ 
+        When setting up partitions, bear the following in mind: in case of
+        FAT16 and BIGDOS partitions, the larger the partition, the more space
+        is wasted by "overhang." You may want to optimize your use of disk
+        space by making each partition just below one of the "doubling points"
+        (i.e. 255, 511, 1023 megabytes, etc.). However if you plan to convert
+        the partition into any non-FAT16 type, this is not important.
+
+        You can also have "extended" partitions, but EFDISK can only create
+        primary partitions. You can, however, use the standard FDISK
+        utility to create an extended partition, and then create "logical
+        drives" within that if you wish. Bear in mind that you can have a
+        maximum of four primary partitions on one drive (one of them can
+        be an extnded partition with more logical drives).
+
+        After preparing all partition entries, press F10 to save the new
+        partition table to disk.
+
+
+     2) Operating System Installation
+        ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+        2.1) Installing DOS or Windows
+
+             Do the following steps:
+
+              1. Set the target partition active (you may hide other FAT/NTFS
+                 partitions temporarily with EFDISK), save the changes and
+                 reboot using the operating system's installation media
+              2. Format c:
+              3. Install the system to c:
+
+              NEVER INSTALL THESE SYSTEMS FROM A RUNNING WINDOWS SYSTEM,
+              BECAUSE IT WILL MESS WITH THE ACTIVE SYSTEM'S BOOT FILES,
+              EVEN IF YOU POINT THE INSTALLER TO A DIFFERENT PARTITION!
+
+              If you don't have a bootable CD, then copy the install set
+              to an existing partition, then reboot to the target partition
+              (it must be a bootable partition). Now you can install the
+              system to c:
+
+             Notes:
+
+             - If you want to install Win9x/ME to other than the first
+               harddisk, you must temporarily disable all preceding harddisks
+               in the system BIOS. When installation is complete, they can be
+               enabled again.
+             - DOS and Win9x/ME systems can boot from a non-first harddisk,
+               only if all primary FAT partitions on the preceding harddisks
+               are hidden.
+             - After installing Windows, the MasterBooter menu will
+               disappear, because the installer overwrites the Master Boot
+               Record. Don't panic, just simply re-run MasterBooter,
+               and everything will work fine.
+             - A bug in MS-DOS/Win9x will prevent access to multiple primary
+               partitions if the last logical partition on every harddisk is
+               not a FAT system.
+             - Before installing DOS/Windows, it is usually a good idea to
+               hide existing primary FAT partitions with EFDISK, so
+               DOS/Windows cannot mess with their boot sector and root
+               directory.
+             - NT cannot boot directly from other harddisk than the first.
+             - NT cannot install if its partition begins beyond 2 giabytes
+               To solve this problem, please read the FAQ.
+             - After installing MasterBooter, NT's disk administrator may
+               ask for putting a signature to the disk. No problem with that.
+             - WinNT/2000/XP/2003/Vista can convert FAT partitions to NTFS
+               during installation.
+             - DOS 6.xx cannot boot if its partition begins beyond 2 gigs.
+               Please run the DOSFIX utility (available at the homepage)
+               to fix this error.
+
+        2.2) Installing Unix based systems
+
+             Notes:
+
+             - It is not necessary to pre-create the partitions, because
+               these systems can create and format their native partitions
+               during installation. It's enough to leave some unpartitioned
+               space for them.
+              
+             - Always install the Linux loader (LILO, GRUB etc.) in the
+               superblock of the root partition, even if you install Linux
+               on other than the first harddisk. Maybe you'll get a warning
+               message saying you will not be able to boot Linux, but don't
+               panic. Just run MasterBooter after the installation is done.
+               Note that MasterBooter won't recognize Linux if there is no
+               Linux loader installed.
+
+             - If you're installing FreeBSD, do not set the beginning of the
+               FreeBSD partition directly after the Master Boot Record,
+               because MasterBooter uses 7 sectors after the MBR.
+
+             - If you wan't to boot Solaris from other than the first
+               harddisk, then install Solaris where you want (never mind the
+               warnings that no Solaris stuff is on the boot harddisk),
+               install MasterBooter and boot Solaris with it. At the first
+               boot, you will face an error message that you cannot boot and
+               the installer will start. Go on and select the target device.
+               Then press 'i' when possible to start the boot interpreter.
+               Set the 'bootpath' variable correctly with the 'setenv' command
+               and press CTRL-D to continue. Next time the system will come
+               up correctly.
+
+
+     3) Using MRBOOTER
+        ÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+        When all needed operating systems are installed, you can run MRBOOTER
+        from DOS or Win9x/ME DOS box.
+
+        Note: if you boot from a USB stick which uses harddisk emulation
+        mode (it has more partitions), use 'mrboot.exe 2' to install
+        the boot manager to the 2nd disk, becuase in this case the 1st disk
+	is the USB stick and the 2nd disk is the 1st fixed disk.
+
+        In the first window, you can select the needed oparating systems from
+        a list. MasterBooter shows the following information about each
+        system:
+         1. number of the harddisk
+         2. partition type
+         3. detected operating system (may be incorrect, this is not a problem)
+         4. partition size
+         5. volume label (FAT, HPFS and NTFS partitions only) Please use the
+            'label' command to put a correct label on the target partition
+
+        If MasterBooter detects a previous installation, it tries to import
+        the settings and shows them in the 'Selected partitions' window.
+
+        By pressing F10, the customization window appears.
+
+        You can name each partition, as well as setting a few other
+        parameters. Here you can enable password checking, protecting,
+        FAT hiding, beeping, delaying, optional floppy boot support and
+        set the default partition.
+        It is also possible to define a master password, so others
+        cannot alter your settings.
+        When finished, you can save the settings.
+
+        If you enable protecting, all protected systems will be hidden
+        from the boot menu. They can be booted with special keystrokes,
+        which can be set during the boot menu installation. This can be
+        really useful sometimes :) Reserved keys are: up and down arrows,
+        numbers of selected systems, 'a' for floppy support and the
+        keys from F1 to F4.
+
+        The partition hiding is useful if you use more primary FAT or
+        HPFS/NTFS partitions. The FAT hiding map describes the hiding
+        behavior in case of every selected OS. '1' means hide the
+        partition, '0' means don't hide. Here's an example:
+        Let's assume that we have the following systems:
+        1. Win98 for working. This system should see all others.
+        2. Win98 for surfing the net. This should see only the working one.
+        3. WinME for games. This shouldn't see the others.
+         In this case, the FAT hiding maps are:
+            System          FAT hiding map
+            Win98 work      000 - don't hide anything
+            Win98 Internet  001 - hide the game system
+            WinME game      110 - hide the first two
+
+        Please note, that MasterBooter can read the keystrokes from a file.
+        This can be very helpful for system administrators, because setting
+        up a complete system can be automatic with a simple batch file.
+        Just run mrbooter with the /macro switch. When finished,
+        there will be a file called macro.mrb. A similar system can
+        be built quickly using this file as: mrbooter < macro.mrb.
+
+        When you next reboot from the harddisk you will see a small menu
+        asking you to type a number corresponding to the operating system
+        you wish to boot. The highlighted is the default. The arrow keys
+        and ENTER key or the number keys can be used to select a system.
+        If you use password protecting, then you will be asked for a password.
+        If you enter bad passwords 3 times, the computer will shut down.
+        More available keys are:
+        F1 - Show the screen before boot menu appearance
+        F2 - Shows the menu
+        F3 - Cycle menu color
+        F4 - Cycle highlight color
+
+
+     4) Command line usage
+        ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+        From v2.2 MasterBooter supports command line options to customize
+        an already installed boot menu. This can be very helpful to people
+        with little computer knowledge, because now it is possible to
+        customize the menu with a simple batch file. With command line
+        options, the delay time, the default system and FAT hiding can be set.
+
+        Usage: mrbooter [disk | commands]
+
+        Disk number is 1-based.
+
+        The commands are:
+        /beep:<1|0>         - set beeping on/off
+        /floppy:<1|0>       - set floppy boot support on/off
+        /funckeys:<1|0>     - set boot time function keys support
+        /default:<n>        - sets the n. system to default
+        /delay:<n>          - sets the delay time (1-99, 0 is infinite)
+        /highcolor:<b>:<f>  - sets highlight back and foreground color
+        /menucolor:<b>:<f>  - sets boot menu back and foreground color
+        /macro              - writes all keystrokes to macro.mrb file
+        /?                  - shows help
+
+        Example: mrbooter /delay:14  - will set the delay time to 14 secs.
+
+        Example: mrbooter 2 - will take you to the interactive setup,
+                              but it'll install the boot menu to the 2nd
+                              disk, not the first. This can be handy
+                              if you boot from a PenDrive or CD-ROM with
+                              harddisk emulation and want to install
+                              MasterBooter to the first fixed disk.
+
+        Colors: 'b' is the background value from 0 to 7, 'f' is the
+                foreground value from 0 to 15:
+
+              0 - Black  4 - Red     8 - Gray         12 - Bright Red
+              1 - Blue   5 - Violet  9 - Bright Blue  13 - Bright Violet
+              2 - Green  6 - Brown  10 - Bright Green 14 - Yellow
+              3 - Cyan   7 - White  11 - Bright Cyan  15 - Bright White
+
+        Notes:
+
+        If any command or value are invalid, an error message appears,
+        and the ERRORLEVEL value will be 1. On success, it will be 0.
+
+
+     5) Uninstalling
+        ÄÄÄÄÄÄÄÄÄÄÄÄ
+
+        MasterBooter can be uninstalled using EFDISK with a command line
+        option. Simply typing 'efdisk /mbr' in DOS or in a DOS box under
+        Windows will uninstall MasterBooter.
+        This command will unhide all hidden partitions. Note that the
+        currently active partition will boot after restarting the computer.
+
+
+     6) Important Notes
+        ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+        - Before using this program, be sure to disable the virus warning
+          option in your system's BIOS (if it has this option).
+        - Install MasterBooter from DOS or Win9x/ME. It won't install from
+          WinNT/2000/XP/2003/2008/Vista, OS/2, Linux, etc.
+        - It is usually a good idea to create logical drives for common
+          data. Note that logical drives will always be accessible, they
+          cannot be hidden. Use the DOS FDISK or Windows Disk Administrator
+          tool to create an extended partition and the logical drives.
+        - Bear in mind that the C: drive is always the active partition.
+        - Prior to v3.1, every harddisk, which was not the first in the
+          system and was bootfixed, must be bootfixed again when putting
+          as the first harddisk.
+
+
+ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+³ A STEP-BY-STEP EXAMPLE ÃÄÄÄÄÄÄÄÄÄÄÄÄ 6 ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+         Let's assume that we have a 120Gig master and an old 2Gig slave
+         harddisk. We want a WinXP, a Win98, a Linux and a DOS system.
+         We also need two logical drives, an NTFS for large files
+         and a FAT32 for shared Win98 and WinXP data.
+         Let's partition the harddisks in the following way:
+
+         Master: 20Gb - for WinXP
+                 10Gb - for Win98
+                 90Gb - for an extended partition with four logical drives:
+                             9Gb for Linux
+                             1Gb for Linux swap
+                             60Gb for NTFS logical drive (for XP only)
+                             20Gb for FAT32 logical drive (for XP and 98)
+
+         Slave:  2Gb   - for DOS/Win3.1
+
+         Here's the recipe:
+
+         0: Create a bootable media (PenDrive in this example) and copy
+            FORMAT, FDISK, EFDISK and MRBOOTER onto it.
+         1: Boot with the PenDrive and run the 'efdisk /mbr' command.
+            Run EFDISK and create the 20Gb and 10Gb partitions on the master
+            harddisk (both are FAT32 LBA type). Set the first active. Save the
+            changes by pressing F10.
+         2: Reboot with the PenDrive and format C: and D:
+         3: Reboot with the WinXP installation CD and install WinXP to C:
+         4: Create the extended partition and logical drives with then WinXP
+            disk administrator utility. All logical drives must be FAT32,
+            except the third, which must be NTFS.
+         5: Reboot with the PenDrive, run EFDISK, hide the first partition
+            and set the second active. Save the changes by pressing F10.
+         6: Reboot with the Win98 installation CD and install Win98 to C:
+            Note, that the active partition is always the C: drive.
+         7: Reboot using the Linux installation media and begin Linux
+            installation. Use /dev/hda5 for the root system and /dev/hda6
+            for the swap. Change the type of /dev/hda5 from FAT32 to Linux and
+            /dev/hda6 from FAT32 to Linux Swap before initalizing the
+            partitions. Install LILO or GRUB into the superblock of /dev/hda5.
+         8: Reboot with the PenDrive. Run the 'efdisk /mbr 2' command to prepare
+            the slave harddisk. Run EFDISK and create the 2Gb BIGDOS partition
+            for DOS/Win3.1 on the slave harddisk, set it active and save the
+            changes by pressing F10.
+         9: Reboot with a DOS 6.x system disk. Because DOS 6.x cannot use
+            FAT32, NTFS and Linux partitions, C: is now the FAT partition on
+            the second disk. So format C: with the '/s' command line option.
+        10: Reboot using the PenDrive. Now install MasterBooter. It should
+            detect all four operating systems. It's not needed to hide the
+            Windows systems from the DOS system in this case, because
+            DOS cannot see FAT32/NTFS/Linux drives.
+        11. Reboot, the menu should pop up. Select the DOS system and install
+            DOS/Win3.1 to C:
+        12. Ready.
+
+ÚÄÄÄÄÄÄÄÄÄ¿
+³ HISTORY ÃÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ 7 ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ÀÄÄÄÄÄÄÄÄÄÙ
+
+       Version:
+
+       1.0b - First official test release. Max number of OSes is 4, no
+              password protecting, no FAT hiding, system names are
+              max 8 characters long, no partitioning utility
+
+       1.1  - Added EFDISK partitioning program to package
+            - Fixed typos in documentation
+            - Removed 'by NagyD' string from loader
+            - Improved 'string input' routine
+            - Added Hungarian documentation
+            - Minor bug fixes
+            - Added support for unknown file system
+            - Added infinite boot delay time
+
+       1.2  - Less useless MBR writes (better loader routine)
+            - If an OS is not on the first harddisk, then MasterBooter will examine
+              that the 'physical drive number' value in the boot sector is
+              correct. If not, it will be corrected. For example OS/2 cannot boot if
+              this value is incorrect.
+            - OS/2's Boot Manager doesn't patch the MBR (this
+              was an error in the documentation of MasterBooter), so it can coexist with
+              MasterBooter (but unnecessary).
+
+       1.3  - Fixed a small bug in the Boot Sector patcher
+            - Added LILO detection in the MBR
+            - Loader now clears screen if necessary
+            - System names can be up to 16 characters long
+
+       1.4  - Small improvements in loader routine
+
+       1.5  - Added WinNT support
+            - Some documentation cosmetics and additions
+
+              A Big Thanks goes to Jonathan Baker-Bates, who helped
+              me to re-write and correct the documentation.
+
+            - Added Novell DOS support
+
+       2.0  - Added support for password protecting partitions
+            - Added support for hiding/unhiding FAT partitions
+            - Better OS detection routine
+            - Fixed documentation bug in the example section
+            - DOC files are renamed to TXT
+
+       2.1  - After writing the new Master Boot Record,
+              pressing ESC will quit to DOS (doesn't reboot)
+            - Tested with OS/2 v4.0 (Merlin)
+            - Added support for beeping when boot menu appears
+            - Added Win98 support
+            - Added support for booting up to 6 OSes
+
+       2.2  - Added IBM DOS support
+            - Added FreeBSD support
+            - On-the-fly FAT unhiding during booting if hidden
+            - Loader routine now flushes keyboard buffer
+            - Nicer boot menu
+            - Now DOS and all Windowses can be booted from
+              a slave HD, but in this case you MUST enable
+              FAT hiding. A big thanks goes to Marcel Remkes
+              for his helping idea
+            - Keyboard input is redirected to standard input,
+              so all keystrokes can be fed from a file
+            - MasterBooter now supports command line options
+            - Delay time can be up to 99 secs
+
+       2.3  - Now works in Win9x DOS box
+            - Added more systems
+            - Added some more command line options
+              Loader:        - Remaining delay time is displayed at boot time
+                             - Default system is highlighted, arrows and ENTER
+                               can be used to select a system
+
+       2.4  - Added BOOTFIX utility. Please read the FAQ for more information.
+              MRBOOTER doesn't patch boot sectors any more
+            - Now default system can be the last booted one, select 0 at the 'default' question
+            - Added partition protecting. The last partition can be hidden from the boot menu
+
+       2.5  - Fixed a BOOTFIX bug for FAT32 systems
+            - Fixed an MRESCUE bug which appeared on systems with more harddisks
+            - Added SCO OpenServer support
+
+       2.6  - Added MBR virus checking routine in loader
+            - Added HPFS/NTFS hiding capability
+            - Added ability to hide partitions on the first harddisk only
+            - Added OSR2 and Win98 support
+
+       2.7  - Added Solaris support
+            - Smaller bugfixes and cosmetics
+
+       2.8  - Added Oberon support
+            - Added BeOS support
+            - Added support for booting Linux from logical drives
+            - Added command line options to set menu colors
+            - Tested with Win2000 beta
+
+       2.9  - Fixed a problem which caused false Norton Antivirus alarm
+            - Setup screen shows partition sizes
+
+       3.0  - Completely rewritten code
+            - Nice and straightforward installer. This installer imports previous
+              settings if there are any
+            - Different protection system, more systems can be hidden from the boot menu
+            - Dynamic FAT hiding, it is possible to set the FAT hiding options for every system
+            - Added Win2000 support
+            - Added EBIOS support
+            - Revisited documentation
+            - Added /macro switch
+
+       3.1  - Loader bugfix on machines without EBIOS
+            - Now loader patches FAT boot sectors on-the-fly if needed
+            - Loader shows a screen saver after 1 min
+            - Mrescue bugfixes
+            - Added optional floppy boot support
+            - Tested with PTS-DOS
+            - Tested with WinME
+            - Updated documentation
+
+       3.2  - Added option to hide the menu completely
+            - More usable on Braille displays
+            - Tested with WinXP
+            - Boots OS/2 from logical drives too
+            - Bug fixed with internal ZIP drives
+            - Screensaver can be disabled
+            - Added /funckeys command line option to
+              enable/disable function keys at boot time
+
+       3.3  - Cosmetic changes and bugfixes
+            - Menu hiding bugfix
+            - Better volume label detection
+
+       3.4  - Added support for huge disks and partitions
+            - Updated documentation
+
+       3.5  - Added true partition hiding for Windows systems
+            - Added OS X support
+            - Tested with Vista
+            - added command line option to specify target
+              disk to install the menu to
+
+       3.6  - Fixed a bug when MasterBooter should be
+              installed to other than the 1st disk
+            - Rewrote mrescue utility. It's command line-only now
+
+       3.7  - Released as open source

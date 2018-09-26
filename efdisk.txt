@@ -1,0 +1,590 @@
+		    ÉÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ»
+		    º      EFDISK v3.7 DOCUMENTATION      º
+		    º        1997-2018 Nagy Daniel        º
+		    ÈÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ¼
+
+ÚÄÄÄÄÄÄÄÄÄÄ¿
+³ CONTENTS ³
+ÀÄÄÄÄÄÄÄÄÄÄÙ
+
+		Disclaimer............................ 1
+
+		Introduction.......................... 2
+
+		Features.............................. 3
+
+		Requirements.......................... 4
+
+		Usage (IMPORTANT!).................... 5
+
+                Partition types....................... 6
+
+		History............................... 7
+
+		Technical information................. 8
+
+
+ÚÄÄÄÄÄÄÄÄÄÄÄÄ¿
+³ DISCLAIMER ÃÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ 1 ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ÀÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+        Using this program comes without any warranty. The author
+        and distributors will not accept responsibility for any
+        damage incurred directly or indirectly through use of this
+        program.
+        Use at your own risk!
+
+
+ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+³ INTRODUCTION ÃÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ 2 ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+        EFDISK is a disk partitioning program. With EFDISK you can create
+        primary partitions on your harddisks.
+        EFDISK supports many partition types, however you cannot make
+        logical drives and extended partitions with it. The original
+        FDISK program doesn't allow you to create more than one primary
+        partition per harddisk. EFDISK allows four, therefore it's a
+        powerful tool to help installing more operating systems on your PC.
+        It can create partitions by automatically calculating the remaining
+        free space. This can be extremely useful for system administrators,
+        schools and computer store employees.
+        EFDISK is a support program of MasterBooter, not a standalone
+        utility.
+
+
+ÚÄÄÄÄÄÄÄÄÄÄ¿
+³ FEATURES ÃÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ 3 ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ÀÄÄÄÄÄÄÄÄÄÄÙ
+
+        - Displaying partition information of all drives in your system
+
+        - Creating or editing partitions (causes data loss!)
+
+        - Compatibility with all partition types, including:
+             FAT16, FAT32, HPFS, NTFS, Hidden FAT, hidden NTFS/HPFS,
+             Ext2FS, Linux swap, etc...
+
+        - Easy-to-use user interface
+
+        - Usable via command line options (use /? option for help)
+
+
+ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+³ REQUIREMENTS ÃÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ 4 ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+     - 80386 processor or up
+     - Floppy, CD-ROM or USB stick with DOS
+     - At least one harddisk
+     - Keyboard
+     - VGA adapter
+
+
+ÚÄÄÄÄÄÄÄ¿
+³ USAGE ÃÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ 5 ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ÀÄÄÄÄÄÄÄÙ
+
+     Warning: Playing with partitions is a risky job! Use this program
+              only if you know what you're doing! Be sure to read the
+              whole documentation first!
+
+              BEFORE REPARTITIONING A DRIVE, CREATE A RESCUE FILE!!!
+
+     1) Installation
+
+        You can copy these files (this docs and the executables) together
+        wherever you like. This program doesn't need any additional
+        configuration. Just execute it.
+        Copying this program to a system floppy can be useful.
+
+
+     2) Usage information
+
+          For safety:
+          0) BACK UP ALL IMPORTANT DATA!
+          1) Make a system disk by typing: 'format a: /s'
+          2) Create a rescue file with MRESCUE.COM, so you can restore
+             your previous configuration later if necessary.
+          3) Now you can safely run EFDISK and make changes. If anything
+             goes wrong, boot from the floppy you've just created, and
+             restore the saved state with MRESCUE.COM.
+             Note that a new partition must be formatted before usage!
+
+        EFDISK gathers information about your harddisks and partitions.
+        It shows a list of all primary partitions of all harddisks and
+        their parameters. From this list you can choose the partition
+        entry you want to change.
+        In the upper right window, the program shows the number of cylinders,
+        heads and sectors of each harddisk.
+
+        The highlighted row can be moved with the up/down arrow keys.
+        Press ENTER to change the parameters of the highlighted partition.
+        All data in a changed partition will be lost!
+        After pressing ENTER on a partition, EFDISK asks several questions:
+        1. The hexadecimal type ID of the partition. EFDISK will show you
+           the most common types and IDs. Type the value, and press ENTER.
+           Check out section 7 in this documentation for more types.
+        2. Starting cylinder number of partition (the minimum is 0).
+           If the previous partition is ending on cylinder 'x' then set
+           this to 'x+1'. This number is decimal. Type and press ENTER.
+        3. Ending cylinder number or size of partition. EFDISK will show you
+           the maximum cylinder number available for the actual harddisk.
+           If you append an 'm' to the entered value, EFDISK will treat
+           that as the partition size in megabytes. If you omit the 'm'
+           character, the number will be treated as a cylinder value.
+           This number is also decimal. Type and press ENTER.
+
+        The number of heads and sectors per track values are determined
+        automatically for each disk, you don't have to mess with them.
+
+        Pressing SPACE will activate/deactivate the highlighted partition.
+
+        Pressing DEL will clear the whole highlighted entry.
+
+        Pressing 'h' over a FAT/NTFS partition will cause hiding/unhiding it.
+        This can be important if OS/2 is used, or if you don't want
+        Win9x/ME/NT to recognize other primary FAT/NTFS partitions.
+        Hiding a partition doesn't have any effect with Win2000/XP/2003.
+        You can use the Disk Administrator utility of these systems
+        to delete the assigned drive letters you don't want to access.
+
+        After preparing all partition entries, press F10 to save the new
+        partition table to the harddisk.
+
+!!   Usage note: - EFDISK doesn't check for partitioning errors! It's not an
+!!                 'intelligent' program. You have total freedom to set all
+!!                 parameters, even if they are incorrect or useless!
+                
+
+     3) Command line usage
+
+        Since v2.1 EFDISK can be used with command line options. With
+        command line options, one can create, delete and activate partitions,
+        and hide/unhide primary FAT/NTFS partitions. Using command line
+        options can be very useful for system administrators,
+        hardware/software stores or schools.
+        Note that the changes will take effect only after a reboot.
+
+        If there was an error, then the return value is 1, else 0.
+
+        The syntax is:
+        efdisk command <partition_number> [harddisk_number]
+
+        Defining the partition number is always compulsory except for the
+        'delall' and 'mbr' commands, where it must be omitted.
+        The commands are:
+        /create type starting_cyl. ending_cyl. - to create
+        /crsize type size_in_MB                - to create
+        /delete                                - to delete
+        /delall                                - to delete all
+        /activate                              - to activate
+        /hidefat                               - to hide primary FAT
+        /hident                                - to hide primary NTFS/HPFS
+        /unhidefat                             - to unhide primary FAT
+        /unhident                              - to unhide primary NTFS/HPFS
+        /mbr                                   - to install new MBR loader
+        /?                                     - to get help
+
+        - Only one command is allowed per command line.
+        - The type is hexadecimal, the cylinders are decimal numbers.
+        - Partition number is a number from 1 to 4. Only one partition number
+          is allowed per command (don't use this parameter for delall and mbr
+          commands).
+        - Disk number is a number from 1 to 4. If omitted, the default is 1.
+          Only one disk number is allowed per command.
+        - The /crsize command calculates the new partition's starting
+          cylinder from the previous partition's ending cylinder. Therefore
+          always be sure, that the previous partition entry defines an
+          already existing valid partition, or you will loose your data!
+          If the new partition is the first partition, then the
+          starting cylinder number will be 0.
+        - The /mbr and /delall commands only need a harddisk number
+          (the default is the primary master harddisk if not specified)
+        - The /mbr command unhides all hidden primary partitions.
+
+
+        Examples:
+        --------
+        - To create a primary BIGDOS partition (type 6) with starting
+          cylinder 12, ending cylinder 265 in the 3rd partition entry on
+          the 2nd harddisk, type:
+          efdisk /create 6 12 265 3 2
+        - to create a 2000MB FAT32 partition in the 2nd entry (1st must be
+          a valid existing partition) on the 1st harddisk, type:
+          efdisk /crsize b 2000 2
+        - To delete the 2nd partition on the 1st harddisk, type:
+          efdisk /delete 2   (note that the disk number can be omitted if 1)
+        - To delete all partitions on the 3rd harddisk, type:
+          efdisk /delall 3
+        - To hide the 4th partition (must be FAT) on the 1st harddisk type:
+          efdisk /hidefat 4
+
+
+        Creating automatically calculated partitions:
+        ---------------------------------------------
+
+           The 'create' command accepts '*' characters instead of the starting
+           and the ending cylinder numbers.
+
+           In this case the starting cylinder number will be the ending
+           cylinder number of the previous partition + 1, and the ending
+           cylinder number will be the maximum cylinder number of the harddisk.
+           Because of this, all partitions beyond an automatically
+           calculated one will be lost!
+
+           If you specify 1 for the partition number then the starting
+           cylinder number will be 0 (because there is no previous existing
+           partition) so this command will create a partition which will
+           use all harddisk space. In this case, all data will be lost
+           after formatting this partition!
+
+           For example:
+           efdisk /create 6 * * 3 2
+           The above command will create a BIGDOS partition in the third entry
+           on the second harddisk, with the automatic calculation of the
+           starting and the ending cylinders using all remaining space after
+           the second partition.
+
+           This feature can be useful when there is a need for creating
+           hundreds of same systems with different harddisk sizes, which
+           already contain a fixed sized smaller partition (for example
+           Compaq machines with a diagnostic partition).
+
+           Notes about automatic partition creation:
+           - Never leave off a single '*'! If you use '*' then both cylinder
+             numbers must be '*' characters. It is not possible to define
+             either cylinder number and use '*' for the other, i.e.
+             'efdisk 6 12 * 2 1' is not valid.
+           - If the partition number is 2, 3 or 4, then the starting cylinder
+             value will be calculated from the ending cylinder value of the
+             previous partition. If the partition number is 1 then the
+             starting cylinder number will be 0.
+           - Be sure that there are no existing partitions after an
+             automatically created one, because it will use all remaining
+             space, therefore partitions after the automatically created one
+             would be erased.
+
+
+     4) General notes about partitioning
+
+        - If the computer doesn't boot after using EFDISK or other
+          partitioners don't recognize partitions created with EFDISK,
+          then do an 'efdisk /mbr' command. This problem may occur with
+          brand new harddisks, which don't contain the proper loader
+          routine and the 0AA55h MBR signature in their MBRs yet.
+          This command erases an existing boot menu!
+        - If there's data in the other partitions of your harddisk than
+          the partitions you'll change then create backups of your
+          partition tables with MRESCUE for safety.
+        - You can have only one active partition in your harddisk's
+          partition table. If you activate a partition, EFDISK will
+          automatically clear the other partition's 'active' flag.
+        - There's no point to activate extended partitions
+        - hiding/unhiding works only with primary FAT, NTFS/HPFS partitions
+!!      - Don't use EFDISK to resize, move or change the type of such
+!!        existing partitions that contain data you need! Once you alter
+!!        an entry (except activating or hiding/unhiding it) the data
+!!        in that partition will be lost!
+
+
+ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+³ PARTITION TYPES ÃÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ 6 ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+        These are the currently known partition types. These values are
+        from Ralph Brown's interrupt list. (A big thanks goes to him for
+        maintaining that impressive documentation!)
+
+        ID      Name
+        ÄÄ      ÄÄÄÄ
+        00h     empty
+        01h     DOS 12-bit FAT
+        02h     XENIX root file system
+        03h     XENIX /usr file system (obsolete)
+        04h     DOS 16-bit FAT (up to 32M)
+        05h     DOS 3.3+ extended partition
+        06h     DOS 3.31+ Large File System (16-bit FAT, over 32M)
+        07h     QNX
+        07h     OS/2 HPFS
+        07h     WinNT NTFS
+        07h     Advanced Unix
+        08h     OS/2 (v1.0-1.3 only)
+        08h     AIX bootable partition, SplitDrive
+        08h     SplitDrive
+        08h     Commodore DOS
+        08h     DELL partition spanning multiple drives
+        08h     QNX 1.x and 2.x
+        09h     AIX data partition
+        09h     Coherent filesystem
+        09h     QNX 1.x and 2.x
+        0Ah     OS/2 Boot Manager
+        0Ah     OPUS
+        0Ah     Coherent swap partition
+        0Bh     Win95 OSR2 with 32-bit FAT
+        0Ch     Win95 OSR2 with 32-bit FAT (LBA-mode INT 13 extensions)
+        0Eh     LBA VFAT (same as 06h but using LBA-mode INT 13)
+        0Fh     LBA VFAT (same as 05h but using LBA-mode INT 13)
+        10h     OPUS
+        11h     Hidden 12-bit FAT partition
+        12h     Compaq Diagnostics partition (FAT compatible)
+        14h     (using Novell DOS 7.0 FDISK to delete Linux Native part)
+        14h     Hidden sub-32M 16-bit FAT partition
+        16h     Hidden over-32M 16-bit FAT partition
+        17h     Hidden HPFS partition
+        18h     AST special Windows swap file
+        1Bh     Hidden Win95 with 32-bit FAT
+        1Ch     Hidden Win95 with 32-bit LBA FAT
+        1Eh     Hidden Win95 with LBA BIGDOS
+        21h     officially listed as reserved
+        23h     officially listed as reserved
+        24h     NEC DOS 3.x
+        26h     officially listed as reserved
+        31h     officially listed as reserved
+        33h     officially listed as reserved
+        34h     officially listed as reserved
+        36h     officially listed as reserved
+        38h     Theos v3.2 2GB partition
+        39h     Theos v4 spanned partition
+        3Ah     Theos v4 4GB partition
+        3Bh     Theos v4 extended partition
+        3Ch     PowerQuest PartitionMagic recovery partition
+        40h     VENIX 80286
+        41h     Personal RISC Boot
+        41h     Power PC Reference Platform Boot
+        42h     SFS (Secure File System) by Peter Gutmann
+        45h     EUMEL/Elan
+        46h     EUMEL/Elan
+        47h     EUMEL/Elan
+        48h     EUMEL/Elan
+        4Dh     QNX4.x
+        4Eh     QNX4.x 2nd part
+        4Fh     QNX4.x 3rd part
+        4Fh     Oberon
+        50h     OnTrack Disk Manager, read-only partition
+        51h     OnTrack Disk Manager, read/write partition
+        51h     NOVELL
+        52h     CP/M
+        52h     Microport System V/386
+        53h     OnTrack Disk Manager, write-only partition???
+        54h     OnTrack Disk Manager (DDO)
+        55h     EZ-Drive
+        56h     GoldenBow VFeature
+        56h     DM converted to EZ-BIOS
+        57h     DrivePro
+        5Ch     Priam EDisk
+        61h     SpeedStor
+        63h     Unix SysV/386, 386/ix
+        63h     Mach, MtXinu BSD 4.3 on Mach
+        63h     GNU HURD
+        64h     PC-ARMOUR protected partition
+        64h     Novell NetWare 2.xx
+        65h     Novell NetWare 3.xx or 4.xx
+        67h     Novell
+        68h     Novell
+        69h     Novell
+        70h     DiskSecure Multi-Boot
+        71h     officially listed as reserved
+        73h     officially listed as reserved
+        74h     officially listed as reserved
+        75h     IBM PC/IX
+        76h     officially listed as reserved
+        80h     Minix v1.1 - 1.4a
+        81h     Minix v1.4b+
+        81h     Linux
+        81h     Mitac Advanced Disk Manager
+        82h     Linux Swap partition
+        82h     Prime
+        82h     Solaris x86
+        83h     Linux native file system
+        84h     OS/2-renumbered type 04h partition (hiding DOS C: drive)
+        84h     Hibernation partition
+        85h     Linux extended partition
+        86h     NTFS volume set
+        87h     HPFS Fault-Tolerant mirrored partition
+        8Ah     Linux Kernel Partition (used by AiR-BOOT)
+        8Eh     Linux Logical Volume Manager partition
+        93h     Amoeba file system
+        94h     Amoeba bad block table
+        99h     DCE376 logical drive
+        A0h     IBM Thinkpad hibernation partition
+        A0h     Phoenix NoteBIOS Power Management "Save-to-Disk" partition
+        A1h     officially listed as reserved
+        A3h     officially listed as reserved
+        A4h     officially listed as reserved
+        A5h     FreeBSD, NetBSD, BSD/386
+        A6h     OpenBSD
+        A7h     NEXTSTEP
+        A9h     NetBSD
+        AAh     Olivetti Fat 12 1.44Mb Service Partition
+        B1h     officially listed as reserved
+        B3h     officially listed as reserved
+        B4h     officially listed as reserved
+        B6h     officially listed as reserved
+        B7h     BSDI file system (secondarily swap)
+        B8h     BSDI swap partition (secondarily file system)
+        BEh     Solaris boot partition
+        C0h     CTOS
+        C0h     REAL/32 secure small partition
+        C1h     DR DOS 6.0 LOGIN.EXE-secured 12-bit FAT partition
+        C4h     DR DOS 6.0 LOGIN.EXE-secured 16-bit FAT partition
+        C6h     DR DOS 6.0 LOGIN.EXE-secured Huge partition
+        C7h     Syrinx Boot
+        CBh     reserved for DRDOS/secured (FAT32)
+        CCh     reserved for DRDOS/secured (FAT32, LBA)
+        CEh     reserved for DRDOS/secured (FAT16, LBA)
+        D0h     REAL/32 secure big partition
+        D1h     Old Multiuser DOS secured FAT12
+        D4h     Old Multiuser DOS secured FAT16 <32M
+        D5h     Old Multiuser DOS secured extended partition
+        D6h     Old Multiuser DOS secured FAT16 >=32M
+        D8h     CP/M-86
+        DBh     CP/M, Concurrent CP/M, Concurrent DOS
+        DBh     CTOS (Convergent Technologies OS)
+        E1h     SpeedStor 12-bit FAT extended partition
+        E3h     DOS read-only
+        E3h     Storage Dimensions
+        E4h     SpeedStor 16-bit FAT extended partition
+        E5h     officially listed as reserved
+        E6h     officially listed as reserved
+        EBh     BeOS partition
+        F1h     Storage Dimensions
+        F2h     DOS 3.3+ secondary partition
+        F3h     officially listed as reserved
+        F4h     SpeedStor
+        F4h     Storage Dimensions
+        F5h     Prologue multi-volume partition
+        F6h     officially listed as reserved
+        FDh     Linux raid partition
+        FEh     LANstep
+        FEh     IBM PS/2 IML
+        FFh     Xenix bad block table
+
+ÚÄÄÄÄÄÄÄÄÄ¿
+³ HISTORY ÃÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ 7 ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ÀÄÄÄÄÄÄÄÄÄÙ
+
+        Version:
+
+        1.1 - First official release in the MasterBooter package
+
+        1.2 - If the starting cylinder of a partition was 0, then the
+              'relative starting sector' and 'number of sectors' value
+              in the partition table were incorrect. Now they're correct
+
+        1.3 - Fixed a small bug, that sometimes caused incorrect 'number
+              of sectors' value
+
+        1.4 - Now the 'Space' key can be used to activate a partition,
+              so no need to retype all parameters
+            - With large hard drives, sometimes the partition sizes were
+              incorrect. Now they are always correct
+
+        1.5 - Added partition deleting. Just press DEL over a partition.
+              Setting all partition parameters to zero is the same
+            - Now it is possible to set a partition active on the slave disk.
+              One partition per disk can be made active. This is very
+              useful when partitioning a slave disk, which will be used as
+              master in an other PC
+
+        2.0 - Added 'h' key to hide/unhide a FAT partition
+
+        2.1 - Now supporting up to four harddisks
+            - Fixed a bug which caused incompatibility with some SCSI disks
+            - After writing the new Master Boot Record, pressing ESC will
+              quit to DOS (doesn't reboot)
+            - Added command line options for creating, deleting, activating
+              and hiding partitions (use the /? option for more information)
+
+        2.2 - Fixed a small bug, which occurred at entering the partition ID
+            - Added support for hiding/unhiding FAT32
+            - Added support for FreeBSD
+            - The logical characteristics of the harddisks are shown
+              in the upper right window
+
+        2.3 - Now works in Win95 DOS box
+            - Added support for many partition types
+            - Added /crsize command to create partitions by size
+            - Automatic calculation of partition sizes when creating partitions from command line
+
+        2.4 - Added /mbr command to install the standard DOS MBR loader
+
+        2.5 - Added /print command to print the current partition table
+            - Fixed a bug in the /mbr switch
+            - Fixed a FAT32 creation bug. FAT32 needs 3 boot sectors...
+
+        2.6 - Added NTFS/HPFS partition hiding (command line too)
+
+        2.7 - SPACE now toggles active flag if a partition is already active
+            - The /mbr command unhides hidden partitions
+
+        2.8 - New FAT32 bug fixed
+            - Added Oberon support
+            - Added BeOS support
+
+        2.9 - Added EBIOS support for huge disks (up to 2 terabytes)
+
+        3.0 - EBIOS bugfixes
+            - Cylinder values are now 5 digits long
+            - Cleaned up documentation
+
+        3.1 - Pressing ESC is also effective while editing a partition entry
+            - Smaller bugfixes
+
+        3.2 - Added internal ZIP drive support (Thanks to Gary A. Johnson!)
+            - Partition sizes can be specified in megabytes too
+
+        3.3 - Cosmetic changes
+            - Added more partition types
+
+        3.4 - Fixed bug with /create and /crsize commands
+            - Added support for huge disks and partitions (2TB)
+
+        3.5 - No changes
+
+        3.6 - Documentation changes
+
+        3.7 - Released as open source
+
+ÚÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ¿
+³ TECHNICAL INFORMATION ÃÄÄÄÄÄÄÄÄÄÄÄÄÄ 8 ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+ÀÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ
+
+        A harddisk can contain up to four primary partitions. The partition
+        table (which resides in the very first sector of your harddisk)
+        describes the type, bootability and the starting/ending of the
+        partitions.
+        In bootable partitions, the first sector is always the so called
+        'boot sector' which contains a small OS loader.
+        In these partitions you can install any operating system in theory.
+        But in the real world some operating systems don't allow you to
+        create more than one primary partition, or to boot another operating
+        system. So creating multiple primary partitions and choosing the
+        operating system at boot time is quite difficult.
+        That's why I wrote EFDISK and MasterBooter.
+
+        About FAT types:
+        ÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄ
+
+        There are four types of FAT (File Allocation Table).
+
+        1: FAT12 is now obsolete, used on floppy disks and on partitions
+           smaller than 16Mb.
+        2: FAT16 is the next step. It can be used if a DOS partition
+           is between 16Mb and 32Mb.
+        3: BIGDOS is also a 16-bit type, but allows larger partition sizes.
+           Plain DOS and Win9x/ME use this type nowadays (OS/2,
+           WinNT/2000/XP/2003 and Linux can also be installed over FAT,
+           but there is no point for doing that). The maximum partition
+           size is 2Gb for DOS and Win9x/ME, and 4 Gb for WinNT/2000/XP/2003.
+        4: FAT32 is the newest, it is introduced in Win95 OEM Service
+           Release 2. Maximum partition size is 127 Gb. It is used by
+           Win9x/ME/2000/XP/2003/2008/Vista, WinNT 4.0 cannot recognize it.
+
+
+        With Win95 OSR2, newer types were introduced to indicate that
+        a partition ends beyond the 8 Gb limit. These types are:
+        - BIGDOSx (0eh)
+        - Extended x (0fh)
+        - FAT32x (0ch)
+        These types are not recognized by WinNT 4.0!
